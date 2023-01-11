@@ -1,0 +1,72 @@
+.modal {
+  width: 80%;
+  margin-top: 5vh;
+
+  .modal-body {
+    height: auto;
+    max-height: 550px;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .modal-body {
+      max-height: 450px;
+    }
+  }
+}
+
+.projects {
+  .project-card {
+    background-color: #f3d4d1;
+    padding: 20px;
+    margin: 20px;
+
+    @media only screen and (max-width: 900px) {
+      margin: 20px 10px;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    .project-timeline {
+      font-size: 12px;
+    }
+
+    .project-title {
+      font-size: 20px;
+    }
+
+    .project-stack {
+      color: #31302c;
+      font-size: 15px;
+    }
+
+    .project-description {
+      color: #31302c;
+      font-size: 15px;
+      font-style: italic;
+    }
+  }
+}
+
+details > summary {
+  list-style-type: none;
+  cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details > summary::before {
+  content: "[ + ] ";
+}
+
+details[open] > summary::before {
+  content: "[ − ] ";
+}
+
+details[open] > summary {
+  margin-bottom: 0.5rem;
+}

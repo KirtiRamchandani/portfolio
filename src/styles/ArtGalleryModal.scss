@@ -1,0 +1,119 @@
+.modal {
+  width: 80%;
+  margin-top: 5vh;
+
+  .modal-body {
+    padding: 20px 30px 23px 30px;
+    height: auto;
+    max-height: 550px;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .modal-body {
+      max-height: 450px;
+    }
+  }
+}
+
+#gridContainer {
+  display: grid;
+  @media only screen and (min-width: 600px) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  gap: 15px;
+
+  .wrapper {
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transition: all 100ms ease-out;
+      border-radius: 4px;
+    }
+
+    img:hover {
+      cursor: zoom-in;
+      transform: scale(1.02);
+      -webkit-filter: blur(2px);
+      filter: blur(2px);
+    }
+  }
+}
+
+.main-img-wrapper {
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+  }
+
+  @media only screen and (max-width: 900px) {
+    img {
+      max-height: 400px;
+    }
+  }
+}
+
+.close-button {
+  position: absolute;
+  z-index: 1;
+
+  button {
+    font-size: 24px;
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    padding: 6px;
+    border-radius: 50%;
+  }
+
+  button:hover {
+    background-color: #c5c5c5;
+  }
+}
+
+.zoom-icons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+
+  button {
+    font-size: 24px;
+    border: 2px solid black;
+    margin-left: 10px;
+    padding: 6px;
+    background: white;
+    text-align: center;
+    color: black;
+    z-index: 1;
+    border-radius: 50%;
+  }
+
+  button:hover {
+    background-color: #c5c5c5;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.container {
+  height: auto;
+  min-height: 500px;
+}
+
+@media only screen and (max-width: 900px) {
+  .container {
+    min-height: 400px;
+  }
+}

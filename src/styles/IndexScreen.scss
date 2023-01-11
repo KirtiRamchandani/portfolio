@@ -1,0 +1,64 @@
+.home-screen {
+  @media only screen and (min-width: 901px) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 90px;
+    height: 100vh;
+    margin: 15px;
+  }
+
+  .nav-option {
+    text-align: center;
+    padding: 0 5px;
+    margin: 5px;
+    cursor: pointer;
+
+    .nav-icons,
+    .nav-icons-open {
+      font-size: 50px;
+      color: #faf4e6;
+      -webkit-filter: drop-shadow(3px 3px 0 #31302c);
+      filter: drop-shadow(3px 3px 0 #31302c);
+    }
+
+    .nav-title {
+      margin: 0;
+      font-weight: 500;
+      font-size: 12px;
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .home-screen {
+    display: flex;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    padding: 0 10px;
+    transform: translate(-50%, -20px);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .home-screen {
+    width: 80%;
+    overflow-x: scroll;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8b2d1;
+  border-radius: 15px;
+  cursor: pointer;
+}

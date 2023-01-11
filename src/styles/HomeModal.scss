@@ -1,0 +1,27 @@
+.social {
+  display: flex;
+  margin-top: -15px;
+}
+
+.social p {
+  margin-top: 17px;
+  margin-right: 10px;
+}
+
+.social .social-icon,
+.discord-icon {
+  font-size: 26px;
+  color: #000;
+  margin-right: 6px;
+  margin-top: 15px;
+}
+
+.social .social-icon:hover {
+  color: #d698c1;
+  transition: color 0.2s;
+}
+
+.discord-icon:hover {
+  fill: #d698c1;
+  transition: fill 0.2s;
+}
