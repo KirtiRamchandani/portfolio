@@ -3,7 +3,7 @@ import ProjectsModal from "../components/ProjectsModal";
 import HonoursAndRewardsModal from "../components/HonoursAndRewardsModal";
 import PublicationsModal from "../components/PublicationsModal";
 import ArtGalleryModal from "../components/ArtGalleryModal";
-
+import BlogsModal from "../components/BlogsModal";
 export default {
   name: "IndexScreen",
   components: {
@@ -12,6 +12,7 @@ export default {
     HonoursAndRewardsModal,
     PublicationsModal,
     ArtGalleryModal,
+    BlogsModal,
   },
   data() {
     return {

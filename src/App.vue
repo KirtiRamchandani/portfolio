@@ -10,6 +10,7 @@
 <script>
 import IndexScreen from "./components/IndexScreen";
 import SplashScreen from "./components/SplashScreen";
+import { blogAndIdMapping } from "./assets/blogs/blogAndIdMapping";
 
 export default {
   name: "App",
@@ -20,12 +21,29 @@ export default {
   data() {
     return { isLoading: true };
   },
+  methods: {
+    redirectToBlogsModalIfUrlContainsBlogTitle: function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("blog")) {
+        const blogTitle = urlParams.get("blog");
+        const blogId = blogAndIdMapping[blogTitle];
+        setTimeout(() => {
+          this.$refs.IndexScreen.isHomeOpen = false;
+          this.$refs.IndexScreen.isBlogsOpen = true;
+          this.$refs.IndexScreen.$refs.blogsModal.openedBlogId = blogId;
+        }, 4000);
+      }
+    },
+  },
   mounted() {
     this.$refs.IndexScreen.isArtGalleryOpen = true;
     setTimeout(() => {
       this.$refs.IndexScreen.isArtGalleryOpen = false;
       this.isLoading = false;
     }, 4000);
+
+    // redirect to blogs modal and open the specified blog in the URL.
+    this.redirectToBlogsModalIfUrlContainsBlogTitle();
   },
 };
 </script>

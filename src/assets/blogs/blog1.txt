@@ -1,0 +1,82 @@
+<h2 class="code-line" data-line-start=0 data-line-end=1 ><a id="Unveiling_the_Mystery_Is_it_Possible_to_Leak_onion_URLs_from_the_TOR_Network_0"></a>Unveiling the Mystery: Is it Possible to Leak .onion URLs from the TOR Network?</h2>
+<br>
+<p class="has-line-data" data-line-start="0" data-line-end="3">Vulnerable product: Brave 1.29.79 Chromium: 93.0.4577.63 (Official Build) (64-bit) | Revision:<br>
+ff5c0da2ec0adeaed5550e6c7e98417dac77d98a-<br>
+refs/branchheads/4577@{#1135}</p>
+
+<p class="has-line-data" data-line-start="0" data-line-end="1">When it comes to browser security, Brave is a shining star in the sky, with a dedicated and cooperative bug bounty team. In this blog post, I, alongside Patrick Walker, will be delving into a vulnerability that we discovered.</p>
+<p class="has-line-data" data-line-start="2" data-line-end="3">As I began my search for vulnerabilities, I came across several previously reported issues, most of which dealt with code execution using privileged schemas or information leaks in the TOR network. Setting those aside, I turned my attention to finding a way to disclose &quot; .onion &quot; URLs.</p>
+<p class="has-line-data" data-line-start="4" data-line-end="7">Initially, I thought of attempting to leak URLs through the Omnibox/Address bar, but unfortunately, my efforts were not successful. As many of you may know, when a visitor accesses a website, web servers send headers with information about where the visitor came from, including the Referrer and Origin headers. In the following sections, we will delve deeper into these headers and how they relate to this vulnerability.<br>
+Referrer and Origin headers, just like a lighthouse in a vast ocean, they guide the web server to know where the visitor is coming from. Referrer header tells the server the last page visited by the user while origin header tells the server the origin of the request. In the case of the Brave browser, we found that these headers were not being stripped out when navigating from one &quot; .onion &quot; URL to another, leaving a trail of breadcrumbs for anyone to follow. This is similar to how a lighthouse would guide ships to a specific island, but in this case, it’s guiding anyone to the specific .onion URL, compromising the anonymity of the user.<br>
+Let’s think of it this way, consider the dark web like a vast ocean, and the .onion URLs like little islands in the ocean, it’s a great idea to find a way to navigate to those islands and remain anonymous, but what if we leave a trail of breadcrumbs behind us, which gives away our location? This is similar to how we found that the referrer and origin headers were leaking the .onion URLs in the Brave browser.</p>
+<p class="has-line-data" data-line-start="8" data-line-end="12">What are “.onion” URLs and how it provides anonymous access?<br>
+→ &quot; .onion &quot; URLs are like secret passageways to hidden treasures on the internet. They are a top-level domain that provides access to onion services or hidden services through the TOR network. The TOR network uses a technique called onion routing to transmit data, which makes the communication anonymous. It’s like a game of telephone, where each message gets passed through multiple layers, or “onions,” before it reaches its destination. This makes it extremely difficult for anyone to trace the origin of the communication, providing a high level of anonymity for the user. Think of it like a maze, where the end goal is to reach the center, but the path is winding and unpredictable, making it hard for anyone to follow. The .onion URLs is the same thing, it’s a winding and unpredictable path to reach a specific location on the internet, making it hard for anyone to follow the user’s journey.<br>
+Here, we have uncovered a piece of breadcrumb that the Brave browser was not effectively hiding, the Referrer and Origin headers for the “.onion” URLs. Now it’s time to set up a test scenario, like a treasure hunt, to replicate the vulnerability and confirm our findings. It’s like planning a treasure hunt, now that we know where the treasure is, we must devise a plan to uncover it.<br>
+Steps which are to be followed to bake the exploit:</p>
+<ol>
+<li class="has-line-data" data-line-start="12" data-line-end="13">Setup a “.onion” URL</li>
+<li class="has-line-data" data-line-start="13" data-line-end="15">Now, create the testcase which will print the value of referrer header or Origin Header (as per requirement).</li>
+</ol>
+<p class="has-line-data" data-line-start="15" data-line-end="19">“Test case is yet to be updated and details of test case”<br>
+Patch Analysis:<br>
+The Brave browser has taken a similar approach to the TOR browser in addressing this vulnerability. Let’s explore in detail how the TOR browser handles the Referrer policy and Origin header when it detects that the browser has sent a value with it.<br>
+Patch Analysis for Origin Header:</p>
+<pre><code class="has-line-data" data-line-start="20" data-line-end="27">// hide the Origin header when requesting from .onion and requesting CORS
+  if (StaticPrefs::network_http_referer_hideOnionSource()) {
+    if (mOriginHeaderPrincipal-&gt;GetIsOnion()) {
+      origin.AssignLiteral(&quot;null&quot;);
+    }
+  }
+</code></pre>
+<p class="has-line-data" data-line-start="27" data-line-end="30"><a href="https://searchfox.org/mozilla-central/rev/6c8d325e61b0b445ed2e04899da38c3a4c266cba/netwerk/protocol/http/nsCORSListenerProxy.cpp#979-984">https://searchfox.org/mozilla-central/rev/6c8d325e61b0b445ed2e04899da38c3a4c266cba/netwerk/protocol/http/nsCORSListenerProxy.cpp#979-984</a><br>
+We can see that the code is being used to hide the Origin header when requesting from a “.onion” URL and when requesting a Cross-Origin Resource Sharing (CORS) resource. The very first thing is that this will be triggered when the Origin contains any “.onion” URLs and it won’t strip out the Origin when it is not a “.onion” URL. This code is checking a preference setting in the browser which controls whether or not the Origin header should be hidden when requesting resources from “.onion” URLs. If this preference is set to true, the code then looks at the origin of the request and if it’s coming from an onion URL, it assigns “null” to the Origin header variable. This effectively strips the header and prevents it from being sent to the server, protecting the user’s privacy by not revealing the origin of the request or the user’s location. However, this code will only be executed if the preference is set to true, otherwise the Origin header will be sent as usual and it only applies to requests to “.onion” URLs and CORS resources.<br>
+Now, let’s have a look over Referrer Policy in the TOR browser,</p>
+<p class="has-line-data" data-line-start="31" data-line-end="32">Patch for Referrer Header:</p>
+<pre><code class="has-line-data" data-line-start="33" data-line-end="40">// Send an empty referrer if xorigin and leaving a .onion domain.
+  if (StaticPrefs::network_http_referer_hideOnionSource() &amp;&amp;
+      !uriHost.Equals(referrerHost) &amp;&amp;
+      StringEndsWith(referrerHost, &quot;.onion&quot;_ns)) {
+    return NS_OK;
+  }
+</code></pre>
+<br>
+<p class="has-line-data" data-line-start="40" data-line-end="44"><a href="https://searchfox.org/mozilla-central/rev/f8576fec48d866c5f988baaf1fa8d2f8cce2a82f/dom/security/ReferrerInfo.cpp#334-339">https://searchfox.org/mozilla-central/rev/f8576fec48d866c5f988baaf1fa8d2f8cce2a82f/dom/security/ReferrerInfo.cpp#334-339</a><br>
+Similar to Origin Header, in this code, the code is controlling whether or not the Referrer header should be hidden when leaving a “.onion” domain and when requesting a cross-origin resource. If this preference is set to true, the code then checks whether the URI host (i.e the website the user is visiting) is different from the referrer host (i.e the website the user came from) and if the referrer host ends with “.onion”. If both conditions are met, the code returns “NS_OK” which means it will send an empty referrer.<br>
+Same approach as above is inherited in the Brave Browser with TOR, let’s have a look at it.<br>
+Patch for Referrer Header and Non-CORS requests:</p>
+<pre><code class="has-line-data" data-line-start="45" data-line-end="58">ComputeReferrerForPolicy(                                                   \
+      ReferrerPolicy policy, const GURL&amp; original_referrer,                   \
+      const GURL&amp; destination, bool* same_origin_out_for_metrics) {           \
+    if (base::EndsWith(original_referrer.host_piece(), &quot;.onion&quot;,              \
+                       base::CompareCase::INSENSITIVE_ASCII) &amp;&amp;               \
+        !url::IsSameOriginWith(original_referrer, destination)) {             \
+      return GURL();                                                          \
+    }                                                                         \
+    return ComputeReferrerForPolicy_Chromium(                                 \
+        policy, original_referrer, destination, same_origin_out_for_metrics); \
+  }                                                                           \
+  GURL URLRequestJob::ComputeReferrerForPolicy_Chromium
+</code></pre>
+<br>
+<p class="has-line-data" data-line-start="58" data-line-end="61"><a href="https://github.com/brave/brave-core/pull/10760/files#diff-e1c41276df6e7a9e7e922bfa3299ddf5cccd895d283ac39ee96a0425ff18734f">https://github.com/brave/brave-core/pull/10760/files#diff-e1c41276df6e7a9e7e922bfa3299ddf5cccd895d283ac39ee96a0425ff18734f</a><br>
+In the above code, we can see that patch adds a new condition that checks if the original referrer host ends with “.onion” and if the original referrer and destination are not same origin. If both conditions are met, the patch returns an empty GURL, eventually, it won’t be forwarded the referrer header with the “.onion” URL further. This patch is for Referrer Header and Non-CORS Origin Headers. Let’s have a look at another patch for CORS requests.<br>
+Patch for CORS requests:</p>
+<pre><code class="has-line-data" data-line-start="62" data-line-end="73">// Nullify the Origin header for cross-origin CORS requests
+// originating from a .onion address.
+#define BRAVE_CORS_URL_LOADER_START_REQUEST                        \
+  if (base::EndsWith(request_.request_initiator-&gt;host(), &quot;.onion&quot;, \
+                     base::CompareCase::INSENSITIVE_ASCII) &amp;&amp;      \
+      !request_.request_initiator-&gt;IsSameOriginWith(               \
+          url::Origin::Create(request_.url))) {                    \
+    request_.headers.SetHeader(net::HttpRequestHeaders::kOrigin,   \
+                               url::Origin().Serialize());         \
+  } else /* NOLINT */
+</code></pre>
+<br>
+<p class="has-line-data" data-line-start="73" data-line-end="75"><a href="https://github.com/brave/brave-core/pull/10760/files#diff-53d853f61e9b78f687e583b14503f956285f2259f7d15991c78ce261a1e956a3">https://github.com/brave/brave-core/pull/10760/files#diff-53d853f61e9b78f687e583b14503f956285f2259f7d15991c78ce261a1e956a3</a><br>
+This code deals with the initialization of a request which is for cross-origin resource. The team has patched this by addinh a new condition that checks if the request initiator (i.e the domain which the request is coming from) host ends with “.onion” and if the request initiator and destination (i.e the website the user is visiting) are not same origin. If both conditions are met, the code sets the Origin header to an empty value</p>
+<p class="has-line-data" data-line-start="76" data-line-end="81">Bonus tricks and techniques for Security Peeps<br>
+Bonus Trick:<br>
+When you are testing a web server for CSRF, an easy trick is by using “&lt;img&gt;” tags to change the details. Let’s see how.<br>
+Using an &lt;img&gt; tag or a &lt;meta&gt; refresh tag with a URL that makes a state-changing request to perform CSRF. This works because the browser will automatically send any cookies associated with the URL in the src attribute or the content attribute, allowing the attacker to make a request on behalf of the victim.<br>
+Whenever you test any Python project, check for the headers like “django-cors-headers”, they have got juicy info there. If it is an open-source project, you can find under the requirements.txt directly.</p>

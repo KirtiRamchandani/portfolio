@@ -54,6 +54,7 @@
     <HonoursAndRewardsModal v-if="isHonoursAndRewardsOpen" />
     <PublicationsModal v-if="isPublicationsOpen" />
     <ArtGalleryModal v-if="isArtGalleryOpen" />
+    <BlogsModal v-show="isBlogsOpen" ref="blogsModal" />
   </div>
 </template>
 
