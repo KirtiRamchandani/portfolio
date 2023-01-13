@@ -27,11 +27,13 @@ export default {
       if (urlParams.has("blog")) {
         const blogTitle = urlParams.get("blog");
         const blogId = blogAndIdMapping[blogTitle];
-        setTimeout(() => {
-          this.$refs.IndexScreen.isHomeOpen = false;
-          this.$refs.IndexScreen.isBlogsOpen = true;
-          this.$refs.IndexScreen.$refs.blogsModal.openedBlogId = blogId;
-        }, 4000);
+        if (blogId) {
+          setTimeout(() => {
+            this.$refs.IndexScreen.isHomeOpen = false;
+            this.$refs.IndexScreen.isBlogsOpen = true;
+            this.$refs.IndexScreen.$refs.blogsModal.openedBlogId = blogId;
+          }, 4000);
+        }
       }
     },
   },

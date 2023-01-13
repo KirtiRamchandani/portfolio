@@ -6,15 +6,21 @@
       <span class="modal-icon"></span>
     </div>
     <div class="modal-body">
-      <h1>Hello, I am Kirti AR!</h1>
+      <h1>Hello, I'm Kirtikumar A. R.</h1>
       <p>
-        Welcome to my website. I am a PenTester and also a professional eSports
-        player. I love to contribute to work on the Security of Open-Source
-        Projects. I have won Regional Qualifiers of World Cyber Games 2019 and
-        later ranked 7th in Finals and Top 32 in the World. I go by the alias
-        FaLcOn. Also, I am an intrigued practitioner of VA/PT, Competitive
-        Programming and avid MUNning. Currently, I am focusing on Browsers and
-        Android Security.
+        Think of my website as a fortress, protecting valuable information from
+        cyber threats. As a PenTester, I'm like a knight in shining armor,
+        defending against malicious attacks. My skills as a professional eSports
+        player are like a secret weapon, helping me outmaneuver and defeat my
+        opponents. Just like a gardener tends to a garden, I enjoy contributing
+        to the security of open-source projects. In 2019, I played the regional
+        qualifiers of the World Cyber Games and soared to a 7th place finish in
+        it, solidifying my spot among the top 32 players in the world. You can
+        call me FaLcOn, just like how a falcon is known for its precision and
+        agility. I'm also a practitioner of VA/PT, Competitive Programming and
+        MUNning, like a multi-talented artist with many brushes in my toolbox.
+        Currently, I'm focusing on fortifying the defenses of browsers and
+        android devices.
       </p>
       <div class="social">
         <p>Find me on</p>

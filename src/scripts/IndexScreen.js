@@ -49,6 +49,8 @@ export default {
     openKCloseBlogs: function () {
       this.kcloseOtherModals("Blogs");
       this.isBlogsOpen = !this.isBlogsOpen;
+      const openedBlog = this.$refs.blogsModal.openedBlogId;
+      if (openedBlog) this.$refs.blogsModal.openedBlogId = null;
     },
     openKCloseArtGallery: function () {
       this.kcloseOtherModals("ArtGallery");
