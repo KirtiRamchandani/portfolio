@@ -3,7 +3,8 @@
     text-align: left;
   }
 
-  h2 {
+  h1 {
+    font-size: 32px;
     margin-bottom: 10px;
   }
 
@@ -79,5 +80,11 @@
   .references ol,
   .credits ol {
     list-style-type: none;
+  }
+
+  code {
+    font-size: 1em;
+    display: inline-block;
+    padding-bottom: 25px;
   }
 }

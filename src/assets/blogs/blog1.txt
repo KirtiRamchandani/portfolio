@@ -1,11 +1,11 @@
 <div class="blog">
     <section>
-      <h2>
+      <h1>
         Uncovering TOR's hidden gems: .onion URLs
-      </h2>
+      </h1>
     </section>
     <section>
-      <h3>Table of content:</h3>
+      <h2>Table of content:</h2>
       <ul>
         <li><a href="#story">Story behind vulnerability</a></li>
         <li>
@@ -35,14 +35,13 @@
             >Bonus tricks and techniques for security folks</a
           >
         </li>
-        <li><a href="#takeaways">Key takeaways</a></li>
         <li><a href="#credits">Credits</a></li>
         <li><a href="#references">References</a></li>
       </ul>
     </section>
     <div>
       <p>
-        Vulnerable product: Brave 1.29.79 Chromium: 93.0.4577.63 (Official
+        <strong>Vulnerable product:</strong> Brave 1.29.79 Chromium: 93.0.4577.63 (Official
         Build) (64-bit) | Revision: ff5c0da2ec0adeaed5550e6c7e98417dac77d98a-
         refs/branchheads/4577@{#1135}
       </p>
@@ -54,10 +53,10 @@
       </p>
       <section>
         <a id="story" class="anchor"></a>
-        <h3>Story behind Vulnerability:</h3>
+        <h2>Story behind Vulnerability:</h2>
         <p>
           As I began my search for vulnerabilities, I came across several
-          previously reported issues, most of which dealt with code execution
+          reported issues, most of which dealt with code execution
           using privileged schemas or information leaks in the TOR network.
           Setting those aside, I turned my attention to finding a way to
           disclose " .onion " URLs.
@@ -92,7 +91,7 @@
           and origin headers were leaking the .onion URLs in the Brave browser.
         </p>
         <p>
-          What are “.onion” URLs and how it provides anonymous access? <br />
+          <strong>What are “.onion” URLs and how it provides anonymous access?</strong><br />
           → " .onion " URLs are like secret passageways to hidden treasures on
           the internet. They are a top-level domain that provides access to
           onion services or hidden services through the TOR network. The TOR
@@ -113,7 +112,7 @@
           confirm our findings. It's like planning a treasure hunt, now that we
           know where the treasure is, we must devise a plan to uncover it.
         </p>
-        <p>Steps which are to be followed to bake the exploit:</p>
+        <p><strong>Steps which are to be followed to bake the exploit:</strong></p>
         <ol>
           <li>Setup a “.onion” URL</li>
           <li>
@@ -124,21 +123,23 @@
       </section>
       <section>
         <a id="exploit-analysis" class="anchor"></a>
-        <h3>Vulnerability exploit and its analysis:</h3>
+        <h2>Vulnerability exploit and its analysis:</h2>
         <pre>
-          <code>&lt;!DOCTYPE html&gt;                                              
-            &lt;html&gt;                                                        
-              &lt;body&gt;                                                      
-                &lt;button id="redirectButton" onclick="redirect()"&gt;         
-                  Visit https://whatsmyreferer.com/                       
-                &lt;/button&gt;                                                 
-                &lt;script&gt;                                                  
-                  function redirect() {                                   
-                    window.location.href = "https://whatsmyreferer.com/"; 
-                  }                                                       
-                &lt;/script&gt;                                                 
-              &lt;/body&gt;                                                     
-            &lt;/html&gt;</code>
+<code>
+  &lt;!DOCTYPE html&gt;                                              
+  &lt;html&gt;                                                        
+    &lt;body&gt;                                                      
+      &lt;button id="redirectButton" onclick="redirect()"&gt;         
+        Visit https://whatsmyreferer.com/                       
+      &lt;/button&gt;                                                 
+      &lt;script&gt;                                                  
+        function redirect() {                                   
+          window.location.href = "https://whatsmyreferer.com/"; 
+        }                                                       
+      &lt;/script&gt;                                                 
+    &lt;/body&gt;                                                     
+  &lt;/html&gt;
+</code>
         </pre>
         <p>
           This test case creates a button element with the text "Visit
@@ -164,7 +165,7 @@
       </section>
       <section>
         <a id="patch-analysis" class="anchor"></a>
-        <h3>Vulnerability patch analysis:</h3>
+        <h2>Vulnerability patch analysis:</h2>
         <p>
           The Brave browser has taken a similar approach to the TOR browser in
           addressing this vulnerability. Let's explore in detail how the TOR
@@ -175,12 +176,14 @@
           <a id="patch-analysis-1" class="anchor"></a>
           <h4>Patch analysis for Origin Header:</h4>
           <pre>
-          <code>// hide the Origin header when requesting from .onion and requesting CORS  
-            if (StaticPrefs::network_http_referer_hideOnionSource()) {                  
-              if (mOriginHeaderPrincipal->GetIsOnion()) {                               
-                origin.AssignLiteral("null");                                           
-              }                                                                         
-            }</code>
+<code>
+  // hide the Origin header when requesting from .onion and requesting CORS  
+  if (StaticPrefs::network_http_referer_hideOnionSource()) {                  
+    if (mOriginHeaderPrincipal->GetIsOnion()) {                               
+      origin.AssignLiteral("null");                                           
+    }                                                                         
+  }
+</code>
         </pre>
           <a
             href="https://searchfox.org/mozilla-central/rev/6c8d325e61b0b445ed2e04899da38c3a4c266cba/netwerk/protocol/http/nsCORSListenerProxy.cpp#979-984"
@@ -210,13 +213,15 @@
           <a id="patch-analysis-2" class="anchor"></a>
           <h4>Patch analysis for Referrer Header:</h4>
           <pre>
-          <code>// Send an empty referrer if xorigin and leaving a .onion domain 
-            if (StaticPrefs::network_http_referer_hideOnionSource() &&       
-                !uriHost.Equals(referrerHost) &&                             
-                StringEndsWith(referrerHost, ".onion"_ns)) {                 
-              return NS_OK;                                                  
-            }</code>
-        </pre>
+<code>
+  // Send an empty referrer if xorigin and leaving a .onion domain 
+  if (StaticPrefs::network_http_referer_hideOnionSource() &&       
+      !uriHost.Equals(referrerHost) &&                             
+      StringEndsWith(referrerHost, ".onion"_ns)) {                 
+    return NS_OK;                                                  
+  }
+</code>
+          </pre>
           <a
             href="https://searchfox.org/mozilla-central/rev/f8576fec48d866c5f988baaf1fa8d2f8cce2a82f/dom/security/ReferrerInfo.cpp#334-339"
             >https://searchfox.org/mozilla-central/rev/f8576fec48d866c5f988baaf1fa8d2f8cce2a82f/dom/security/ReferrerInfo.cpp#334-339</a
@@ -240,19 +245,21 @@
           <a id="patch-analysis-3" class="anchor"></a>
           <h4>Patch analysis for Referrer Header and Non-CORS requests:</h4>
           <pre>
-          <code>ComputeReferrerForPolicy(                                                  
-            ReferrerPolicy policy, const GURL& original_referrer,                       
-            const GURL& destination, bool* same_origin_out_for_metrics) {               
-              if (base::EndsWith(original_referrer.host_piece(), ".onion",              
-                                base::CompareCase::INSENSITIVE_ASCII) &&                
-                  !url::IsSameOriginWith(original_referrer, destination)) {             
-                return GURL();                                                          
-              }                                                                         
-              return ComputeReferrerForPolicy_Chromium(                                 
-                  policy, original_referrer, destination, same_origin_out_for_metrics); 
-            }                                                                           
-            GURL URLRequestJob::ComputeReferrerForPolicy_Chromium</code>
-        </pre>
+<code>
+  ComputeReferrerForPolicy(                                                  
+  ReferrerPolicy policy, const GURL& original_referrer,                       
+  const GURL& destination, bool* same_origin_out_for_metrics) {               
+    if (base::EndsWith(original_referrer.host_piece(), ".onion",              
+                      base::CompareCase::INSENSITIVE_ASCII) &&                
+        !url::IsSameOriginWith(original_referrer, destination)) {             
+      return GURL();                                                          
+    }                                                                         
+    return ComputeReferrerForPolicy_Chromium(                                 
+        policy, original_referrer, destination, same_origin_out_for_metrics); 
+  }                                                                           
+  GURL URLRequestJob::ComputeReferrerForPolicy_Chromium
+</code>
+          </pre>
           <a
             href="https://github.com/brave/brave-core/pull/10760/files#diff-e1c41276df6e7a9e7e922bfa3299ddf5cccd895d283ac39ee96a0425ff18734f"
             >https://github.com/brave/brave-core/pull/10760/files#diff-e1c41276df6e7a9e7e922bfa3299ddf5cccd895d283ac39ee96a0425ff18734f</a
@@ -271,17 +278,19 @@
           <a id="patch-analysis-4" class="anchor"></a>
           <h4>Patch analysis for CORS requests:</h4>
           <pre>
-          <code>// Nullify the Origin header for cross-origin CORS requests        
-            // originating from a .onion address.                               
-            #define BRAVE_CORS_URL_LOADER_START_REQUEST                         
-              if (base::EndsWith(request_.request_initiator->host(), ".onion",  
-                                base::CompareCase::INSENSITIVE_ASCII) &&        
-                  !request_.request_initiator->IsSameOriginWith(                
-                      url::Origin::Create(request_.url))) {                     
-                request_.headers.SetHeader(net::HttpRequestHeaders::kOrigin,    
-                                          url::Origin().Serialize());           
-              } else /* NOLINT */</code>         
-        </pre>
+<code>
+  // Nullify the Origin header for cross-origin CORS requests        
+  // originating from a .onion address.                               
+  #define BRAVE_CORS_URL_LOADER_START_REQUEST                         
+    if (base::EndsWith(request_.request_initiator->host(), ".onion",  
+                      base::CompareCase::INSENSITIVE_ASCII) &&        
+        !request_.request_initiator->IsSameOriginWith(                
+            url::Origin::Create(request_.url))) {                     
+      request_.headers.SetHeader(net::HttpRequestHeaders::kOrigin,    
+                                url::Origin().Serialize());           
+    } else /* NOLINT */
+</code>         
+          </pre>
           <a
             href="https://github.com/brave/brave-core/pull/10760/files#diff-53d853f61e9b78f687e583b14503f956285f2259f7d15991c78ce261a1e956a3"
             >https://github.com/brave/brave-core/pull/10760/files#diff-53d853f61e9b78f687e583b14503f956285f2259f7d15991c78ce261a1e956a3</a
@@ -299,7 +308,7 @@
       </section>
       <section>
         <a id="trick-techniques" class="anchor"></a>
-        <h3>Bonus tricks and techniques for security folks:</h3>
+        <h2>Bonus tricks and techniques for security folks:</h2>
         <p>
           When you are testing a web server for CSRF, an easy trick is by using
           "&lt; img /&gt;" tags to change the details. Let's see how.
@@ -309,32 +318,21 @@
           URL that makes a state-changing request to perform CSRF. This works
           because the browser will automatically send any cookies associated
           with the URL in the src attribute or the content attribute, allowing
-          the attacker to make a request on behalf of the victim. Whenever you
-          test any Python project, check for the headers like
-          “django-cors-headers”, they have got juicy info there. If it is an
-          open-source project, you can find under the requirements.txt directly.
+          the attacker to make a request on behalf of the victim.
         </p>
-      </section>
-      <section>
-        <a id="takeaways" class="anchor"></a>
-        <h3>Key takeaways:</h3>
-        <p>Arriving soon</p>
       </section>
       <section class="credits">
         <a id="credits" class="anchor"></a>
-        <h3>Credits:</h3>
-        <span></span>
-        <span></span>
-        <span></span>
+        <h2>Credits:</h2>
         <ol>
           <li>Vulnerability Discovery: <a href="https://twitter.com/HomeSen">Patrick Walker</a> &amp; <a href="https://kirtikumarar.com/">Kirtikumar Anandrao Ramchandani</a></li>
           <li>Patch: <a href="https://fmarier.org/">Francois Marier</a></li>
-          <li>Mentions: <a href="https://azuki.vip/">Yan Zhu</a> &amp; <a href="https://twitter.com/ericlaw">Eric Lawrence</a></a></li>
+          <li>Mentions: <a href="https://azuki.vip/">Yan Zhu</a> &amp; <a href="https://twitter.com/ericlaw">Eric Lawrence</a></li>
         </ol>
       </section>
       <section class="references">
         <a id="references" class="anchor"></a>
-        <h3>References:</h3>
+        <h2>References:</h2>
         <ol>
           <li><a href="https://hackerone.com/reports/1337624">Actual Vulnerability Report</a></li>
           <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-30334">CVE Details for CVE-2022-30334</a></li>
