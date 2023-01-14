@@ -82,9 +82,33 @@
     list-style-type: none;
   }
 
-  code {
+  pre {
+    margin: 10px 0 15px 0;
+  }
+
+  pre > code {
+    display: block;
+    word-wrap: normal;
+  }
+
+  code[class*="language-"],
+  pre[class*="language-"] {
+    overflow: auto;
     font-size: 1em;
-    display: inline-block;
-    padding-bottom: 25px;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    box-shadow: 0 1px 5px 0 #999999;
+    padding: 1rem;
   }
 }
