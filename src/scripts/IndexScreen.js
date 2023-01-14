@@ -50,7 +50,10 @@ export default {
       this.kcloseOtherModals("Blogs");
       this.isBlogsOpen = !this.isBlogsOpen;
       const openedBlog = this.$refs.blogsModal.openedBlogId;
-      if (openedBlog) this.$refs.blogsModal.openedBlogId = null;
+      if (openedBlog) {
+        this.$refs.blogsModal.openedBlogId = null;
+        this.$refs.blogsModal.updateAddressBarURL(null);
+      }
     },
     openKCloseArtGallery: function () {
       this.kcloseOtherModals("ArtGallery");
@@ -63,7 +66,11 @@ export default {
         this.isHonoursAndRewardsOpen = false;
       if (clickedModal !== "Publications") this.isPublicationsOpen = false;
       if (clickedModal !== "CVEs") this.isCVEOpen = false;
-      if (clickedModal !== "Blogs") this.isBlogsOpen = false;
+      if (clickedModal !== "Blogs") {
+        this.isBlogsOpen = false;
+        this.$refs.blogsModal.openedBlogId = null;
+        this.$refs.blogsModal.updateAddressBarURL(null);
+      }
       if (clickedModal !== "ArtGallery") this.isArtGalleryOpen = false;
     },
   },
