@@ -317,7 +317,7 @@
         <ol>
           <li>Vulnerability Discovery: <a href="https://twitter.com/HomeSen">Patrick Walker</a> &amp; <a href="https://kirtikumarar.com/">Kirtikumar Anandrao Ramchandani</a></li>
           <li>Patch: <a href="https://fmarier.org/">Francois Marier</a></li>
-          <li>Mentions: <a href="https://azuki.vip/">Yan Zhu</a> &amp; <a href="https://twitter.com/ericlaw">Eric Lawrence</a></li>
+          <li>Mentions: <a href="https://azuki.vip/">Yan Zhu</a>, <a href="https://twitter.com/ericlaw">Eric Lawrence</a> &amp; <a href="https://shubhamkshatriya25.github.io/">Shubham Singh Kshatriya</a></li>
         </ol>
       </section>
       <section class="references">
@@ -326,8 +326,6 @@
         <ol>
           <li><a href="https://hackerone.com/reports/1337624">Actual Vulnerability Report</a></li>
           <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-30334">CVE Details for CVE-2022-30334</a></li>
-          <li><a href="https://portswigger.net/web-security/csrf/bypassing-referer-based-defenses/lab-referer-validation-depends-on-header-being-present">Referrer Header and CSRF Labs on PortSwigger</a></li>
-          <li><a href="https://portswigger.net/web-security/access-control/lab-referer-based-access-control">Referrer-based Access Control Labs</a></li>
           <li><a href="https://textslashplain.com/2019/10/16/privacy-tweaks-limiting-referrer/">Referrer Policy explained by Eric Lawrence</a></li>
         </ol>
       </section>
