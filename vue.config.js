@@ -8,4 +8,9 @@ module.exports = {
       .loader("raw-loader")
       .end();
   },
+  configureWebpack: {
+    optimization: {
+      minimize: false,
+    },
+  },
 };
