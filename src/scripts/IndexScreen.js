@@ -1,9 +1,11 @@
-import HomeModal from "../components/HomeModal";
-import ProjectsModal from "../components/ProjectsModal";
-import HonoursAndRewardsModal from "../components/HonoursAndRewardsModal";
-import PublicationsModal from "../components/PublicationsModal";
-import ArtGalleryModal from "../components/ArtGalleryModal";
-import BlogsModal from "../components/BlogsModal";
+const HomeModal = () => import("../components/HomeModal");
+const ProjectsModal = () => import("../components/ProjectsModal");
+const HonoursAndRewardsModal = () =>
+  import("../components/HonoursAndRewardsModal");
+const PublicationsModal = () => import("../components/PublicationsModal");
+const ArtGalleryModal = () => import("../components/ArtGalleryModal");
+const BlogsModal = () => import("../components/BlogsModal");
+
 export default {
   name: "IndexScreen",
   components: {

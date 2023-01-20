@@ -1,4 +1,4 @@
-import DetailedBlog from "../components/DetailedBlog";
+const DetailedBlog = () => import("../components/DetailedBlog");
 
 export default {
   name: "Blogs",
