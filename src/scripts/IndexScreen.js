@@ -1,8 +1,10 @@
-import HomeModal from "../components/HomeModal";
-import ProjectsModal from "../components/ProjectsModal";
-import HonoursAndRewardsModal from "../components/HonoursAndRewardsModal";
-import PublicationsModal from "../components/PublicationsModal";
-import ArtGalleryModal from "../components/ArtGalleryModal";
+const HomeModal = () => import("../components/HomeModal");
+const ProjectsModal = () => import("../components/ProjectsModal");
+const HonoursAndRewardsModal = () =>
+  import("../components/HonoursAndRewardsModal");
+const PublicationsModal = () => import("../components/PublicationsModal");
+const ArtGalleryModal = () => import("../components/ArtGalleryModal");
+const BlogsModal = () => import("../components/BlogsModal");
 
 export default {
   name: "IndexScreen",
@@ -12,6 +14,7 @@ export default {
     HonoursAndRewardsModal,
     PublicationsModal,
     ArtGalleryModal,
+    BlogsModal,
   },
   data() {
     return {
@@ -48,6 +51,11 @@ export default {
     openKCloseBlogs: function () {
       this.kcloseOtherModals("Blogs");
       this.isBlogsOpen = !this.isBlogsOpen;
+      const openedBlog = this.$refs.blogsModal.openedBlogId;
+      if (openedBlog) {
+        this.$refs.blogsModal.openedBlogId = null;
+        this.$refs.blogsModal.updateAddressBarURL(null);
+      }
     },
     openKCloseArtGallery: function () {
       this.kcloseOtherModals("ArtGallery");
@@ -60,7 +68,11 @@ export default {
         this.isHonoursAndRewardsOpen = false;
       if (clickedModal !== "Publications") this.isPublicationsOpen = false;
       if (clickedModal !== "CVEs") this.isCVEOpen = false;
-      if (clickedModal !== "Blogs") this.isBlogsOpen = false;
+      if (clickedModal !== "Blogs") {
+        this.isBlogsOpen = false;
+        this.$refs.blogsModal.openedBlogId = null;
+        this.$refs.blogsModal.updateAddressBarURL(null);
+      }
       if (clickedModal !== "ArtGallery") this.isArtGalleryOpen = false;
     },
   },

@@ -1,0 +1,333 @@
+<div class="blog">
+    <section>
+      <h1>
+        Uncovering TOR's hidden gems: .onion URLs
+      </h1>
+    </section>
+    <section>
+      <h2>Table of content:</h2>
+      <ul>
+        <li><a href="#story">Story behind vulnerability</a></li>
+        <li>
+          <a href="#exploit-analysis">Vulnerability exploit and its analysis</a>
+        </li>
+        <li>
+          <a href="#patch-analysis">Vulnerability patch analysis</a>
+          <ul>
+            <li>
+              <a href="#patch-analysis-1">Patch analysis for Origin Header</a>
+            </li>
+            <li>
+              <a href="#patch-analysis-2">Patch analysis for Referrer Header</a>
+            </li>
+            <li>
+              <a href="#patch-analysis-3"
+                >Patch analysis for Referrer Header and Non-CORS requests</a
+              >
+            </li>
+            <li>
+              <a href="#patch-analysis-4">Patch analysis for CORS requests</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#trick-techniques"
+            >Bonus tricks and techniques for security folks</a
+          >
+        </li>
+        <li><a href="#credits">Credits</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </section>
+    <div>
+      <p>
+        <strong>Vulnerable product:</strong> Brave 1.29.79 Chromium: 93.0.4577.63 (Official
+        Build) (64-bit) | Revision: ff5c0da2ec0adeaed5550e6c7e98417dac77d98a-
+        refs/branchheads/4577@{#1135}
+      </p>
+      <p>
+        When it comes to browser security, Brave is a shining star in the sky,
+        with a dedicated and cooperative bug bounty team. In this blog post, I,
+        alongside Patrick Walker, will be delving into a vulnerability that we
+        discovered.
+      </p>
+      <section>
+        <a id="story" class="anchor"></a>
+        <h2>Story behind Vulnerability:</h2>
+        <p>
+          As I began my search for vulnerabilities, I came across several
+          reported issues, most of which dealt with code execution
+          using privileged schemas or information leaks in the TOR network.
+          Setting those aside, I turned my attention to finding a way to
+          disclose " .onion " URLs.
+        </p>
+        <p>
+          Initially, I thought of attempting to leak URLs through the
+          Omnibox/Address bar, but unfortunately, my efforts were not
+          successful. As many of you may know, when a visitor accesses a
+          website, web servers send headers with information about where the
+          visitor came from, including the Referrer and Origin headers. In the
+          following sections, we will delve deeper into these headers and how
+          they relate to this vulnerability.
+        </p>
+        <p>
+          Referrer and Origin headers, just like a lighthouse in a vast ocean,
+          they guide the web server to know where the visitor is coming from.
+          Referrer header tells the server the last page visited by the user
+          while origin header tells the server the origin of the request. In the
+          case of the Brave browser, we found that these headers were not being
+          stripped out when navigating from one " .onion " URL to another,
+          leaving a trail of breadcrumbs for anyone to follow. This is similar
+          to how a lighthouse would guide ships to a specific island, but in
+          this case, it's guiding anyone to the specific .onion URL,
+          compromising the anonymity of the user.
+        </p>
+        <p>
+          Let's think of it this way, consider the dark web like a vast ocean,
+          and the .onion URLs like little islands in the ocean, it's a great
+          idea to find a way to navigate to those islands and remain anonymous,
+          but what if we leave a trail of breadcrumbs behind us, which gives
+          away our location? This is similar to how we found that the referrer
+          and origin headers were leaking the .onion URLs in the Brave browser.
+        </p>
+        <p>
+          <strong>What are “.onion” URLs and how it provides anonymous access?</strong><br />
+          → " .onion " URLs are like secret passageways to hidden treasures on
+          the internet. They are a top-level domain that provides access to
+          onion services or hidden services through the TOR network. The TOR
+          network uses a technique called onion routing to transmit data, which
+          makes the communication anonymous. It's like a game of telephone,
+          where each message gets passed through multiple layers, or "onions,"
+          before it reaches its destination. This makes it extremely difficult
+          for anyone to trace the origin of the communication, providing a high
+          level of anonymity for the user. Think of it like a maze, where the
+          end goal is to reach the center, but the path is winding and
+          unpredictable, making it hard for anyone to follow. The .onion URLs is
+          the same thing, it's a winding and unpredictable path to reach a
+          specific location on the internet, making it hard for anyone to follow
+          the user's journey. Here, we have uncovered a piece of breadcrumb that
+          the Brave browser was not effectively hiding, the Referrer and Origin
+          headers for the ".onion" URLs. Now it's time to set up a test
+          scenario, like a treasure hunt, to replicate the vulnerability and
+          confirm our findings. It's like planning a treasure hunt, now that we
+          know where the treasure is, we must devise a plan to uncover it.
+        </p>
+        <p><strong>Steps which are to be followed to bake the exploit:</strong></p>
+        <ol>
+          <li>Setup a “.onion” URL</li>
+          <li>
+            Now, create the testcase which will print the value of referrer
+            header or Origin Header (as per requirement).
+          </li>
+        </ol>
+      </section>
+      <section>
+        <a id="exploit-analysis" class="anchor"></a>
+        <h2>Vulnerability exploit and its analysis:</h2>
+        <pre>
+<code class="language-html">  &lt;!DOCTYPE html&gt;                                              
+  &lt;html&gt;                                                        
+    &lt;body&gt;                                                      
+      &lt;button id="redirectButton" onclick="redirect()"&gt;         
+        Visit https://whatsmyreferer.com/                       
+      &lt;/button&gt;                                                 
+      &lt;script&gt;                                                  
+        function redirect() {                                   
+          window.location.href = "https://whatsmyreferer.com/"; 
+        }                                                       
+      &lt;/script&gt;                                                 
+    &lt;/body&gt;                                                     
+  &lt;/html&gt;
+</code></pre>
+        <p>
+          This test case creates a button element with the text "Visit
+          <a href="https://whatsmyreferer.com/">https://whatsmyreferer.com/</a>
+          " and an onclick event that calls the redirect() function. When the
+          user clicks the button, the window.location.href = "<a
+            href="https://whatsmyreferer.com/"
+            >https://whatsmyreferer.com/</a
+          >
+          "; line of code will execute and redirect the user to the
+          <a href="https://whatsmyreferer.com/">https://whatsmyreferer.com/</a>
+          where the referrer header will be visible.
+        </p>
+        <p>
+          If you want to test this CORS, non-CORS and Referrer test cases, they
+          are created by Brave security team member Francois at
+          <a
+            href="http://ixrdj3iwwhkuau5tby5jh3a536a2rdhpbdbu6ldhng43r47kim7a3lid.onion/referrer/onion.html"
+            >here</a
+          >, you can visit the test case and check for possible but and if the
+          browser is vulnerable, it will print the &quot;.onion&quot; URL.
+        </p>
+      </section>
+      <section>
+        <a id="patch-analysis" class="anchor"></a>
+        <h2>Vulnerability patch analysis:</h2>
+        <p>
+          The Brave browser has taken a similar approach to the TOR browser in
+          addressing this vulnerability. Let's explore in detail how the TOR
+          browser handles the Referrer policy and Origin header when it detects
+          that the browser has sent a value with it.
+        </p>
+        <section>
+          <a id="patch-analysis-1" class="anchor"></a>
+          <h4>Patch analysis for Origin Header:</h4>
+          <pre>
+<code class="language-javascript">  // hide the Origin header when requesting from .onion and requesting CORS  
+  if (StaticPrefs::network_http_referer_hideOnionSource()) {                  
+    if (mOriginHeaderPrincipal->GetIsOnion()) {                               
+      origin.AssignLiteral("null");                                           
+    }                                                                         
+  }
+</code></pre>
+          <a
+            href="https://searchfox.org/mozilla-central/rev/6c8d325e61b0b445ed2e04899da38c3a4c266cba/netwerk/protocol/http/nsCORSListenerProxy.cpp#979-984"
+            >https://searchfox.org/mozilla-central/rev/6c8d325e61b0b445ed2e04899da38c3a4c266cba/netwerk/protocol/http/nsCORSListenerProxy.cpp#979-984</a
+          ><br />
+          <p>
+            We can see that the code is being used to hide the Origin header
+            when requesting from a ".onion" URL and when requesting a
+            Cross-Origin Resource Sharing (CORS) resource. The very first thing
+            is that this will be triggered when the Origin contains any ".onion"
+            URLs and it won't strip out the Origin when it is not a ".onion"
+            URL. This code is checking a preference setting in the browser which
+            controls whether or not the Origin header should be hidden when
+            requesting resources from ".onion" URLs. If this preference is set
+            to true, the code then looks at the origin of the request and if
+            it's coming from an onion URL, it assigns "null" to the Origin
+            header variable. This effectively strips the header and prevents it
+            from being sent to the server, protecting the user's privacy by not
+            revealing the origin of the request or the user's location. However,
+            this code will only be executed if the preference is set to true,
+            otherwise the Origin header will be sent as usual and it only
+            applies to requests to ".onion" URLs and CORS resources. Now, let's
+            have a look over Referrer Policy in the TOR browser.
+          </p>
+        </section>
+        <section>
+          <a id="patch-analysis-2" class="anchor"></a>
+          <h4>Patch analysis for Referrer Header:</h4>
+          <pre>
+<code class="language-javascript">  // Send an empty referrer if xorigin and leaving a .onion domain 
+  if (StaticPrefs::network_http_referer_hideOnionSource() &&       
+      !uriHost.Equals(referrerHost) &&                             
+      StringEndsWith(referrerHost, ".onion"_ns)) {                 
+    return NS_OK;                                                  
+  }
+</code></pre>
+          <a
+            href="https://searchfox.org/mozilla-central/rev/f8576fec48d866c5f988baaf1fa8d2f8cce2a82f/dom/security/ReferrerInfo.cpp#334-339"
+            >https://searchfox.org/mozilla-central/rev/f8576fec48d866c5f988baaf1fa8d2f8cce2a82f/dom/security/ReferrerInfo.cpp#334-339</a
+          ><br />
+          <p>
+            Similar to Origin Header, in this code, the code is controlling
+            whether or not the Referrer header should be hidden when leaving a
+            ".onion" domain and when requesting a cross-origin resource. If this
+            preference is set to true, the code then checks whether the URI host
+            (i.e the website the user is visiting) is different from the
+            referrer host (i.e the website the user came from) and if the
+            referrer host ends with ".onion". If both conditions are met, the
+            code returns "NS_OK" which means it will send an empty referrer.
+          </p>
+          <p>
+            Same approach as above is inherited in the Brave Browser with TOR,
+            let's have a look at it.
+          </p>
+        </section>
+        <section>
+          <a id="patch-analysis-3" class="anchor"></a>
+          <h4>Patch analysis for Referrer Header and Non-CORS requests:</h4>
+          <pre>
+<code class="language-javascript">  ComputeReferrerForPolicy(                                                  
+  ReferrerPolicy policy, const GURL& original_referrer,                       
+  const GURL& destination, bool* same_origin_out_for_metrics) {               
+    if (base::EndsWith(original_referrer.host_piece(), ".onion",              
+                      base::CompareCase::INSENSITIVE_ASCII) &&                
+        !url::IsSameOriginWith(original_referrer, destination)) {             
+      return GURL();                                                          
+    }                                                                         
+    return ComputeReferrerForPolicy_Chromium(                                 
+        policy, original_referrer, destination, same_origin_out_for_metrics); 
+  }                                                                           
+  GURL URLRequestJob::ComputeReferrerForPolicy_Chromium
+</code></pre>
+          <a
+            href="https://github.com/brave/brave-core/pull/10760/files#diff-e1c41276df6e7a9e7e922bfa3299ddf5cccd895d283ac39ee96a0425ff18734f"
+            >https://github.com/brave/brave-core/pull/10760/files#diff-e1c41276df6e7a9e7e922bfa3299ddf5cccd895d283ac39ee96a0425ff18734f</a
+          ><br />
+          <p>
+            In the above code, we can see that patch adds a new condition that
+            checks if the original referrer host ends with ".onion" and if the
+            original referrer and destination are not same origin. If both
+            conditions are met, the patch returns an empty GURL, eventually, it
+            won't be forwarded the referrer header with the “.onion” URL
+            further. This patch is for Referrer Header and Non-CORS Origin
+            Headers. Let's have a look at another patch for CORS requests.
+          </p>
+        </section>
+        <section>
+          <a id="patch-analysis-4" class="anchor"></a>
+          <h4>Patch analysis for CORS requests:</h4>
+          <pre>
+<code class="language-javascript"> // Nullify the Origin header for cross-origin CORS requests        
+  // originating from a .onion address.                               
+  #define BRAVE_CORS_URL_LOADER_START_REQUEST                         
+    if (base::EndsWith(request_.request_initiator->host(), ".onion",  
+                      base::CompareCase::INSENSITIVE_ASCII) &&        
+        !request_.request_initiator->IsSameOriginWith(                
+            url::Origin::Create(request_.url))) {                     
+      request_.headers.SetHeader(net::HttpRequestHeaders::kOrigin,    
+                                url::Origin().Serialize());           
+    } else /* NOLINT */
+</code></pre>
+          <a
+            href="https://github.com/brave/brave-core/pull/10760/files#diff-53d853f61e9b78f687e583b14503f956285f2259f7d15991c78ce261a1e956a3"
+            >https://github.com/brave/brave-core/pull/10760/files#diff-53d853f61e9b78f687e583b14503f956285f2259f7d15991c78ce261a1e956a3</a
+          ><br />
+          <p>
+            This code deals with the initialization of a request which is for
+            cross-origin resource. The team has patched this by adding a new
+            condition that checks if the request initiator (i.e the domain which
+            the request is coming from) host ends with ".onion" and if the
+            request initiator and destination (i.e the website the user is
+            visiting) are not same origin. If both conditions are met, the code
+            sets the Origin header to an empty value.
+          </p>
+        </section>
+      </section>
+      <section>
+        <a id="trick-techniques" class="anchor"></a>
+        <h2>Bonus tricks and techniques for security folks:</h2>
+        <p>
+          When you are testing a web server for CSRF, an easy trick is by using
+          "&lt; img /&gt;" tags to change the details. Let's see how.
+        </p>
+        <p>
+          Using an &lt; img /&gt; tag or a &lt; meta /&gt; refresh tag with a
+          URL that makes a state-changing request to perform CSRF. This works
+          because the browser will automatically send any cookies associated
+          with the URL in the src attribute or the content attribute, allowing
+          the attacker to make a request on behalf of the victim.
+        </p>
+      </section>
+      <section class="credits">
+        <a id="credits" class="anchor"></a>
+        <h2>Credits:</h2>
+        <ol>
+          <li>Vulnerability Discovery: <a href="https://twitter.com/HomeSen">Patrick Walker</a> &amp; <a href="https://kirtikumarar.com/">Kirtikumar Anandrao Ramchandani</a></li>
+          <li>Patch: <a href="https://fmarier.org/">Francois Marier</a></li>
+          <li>Mentions: <a href="https://azuki.vip/">Yan Zhu</a>, <a href="https://twitter.com/ericlaw">Eric Lawrence</a> &amp; <a href="https://shubhamkshatriya25.github.io/">Shubham Singh Kshatriya</a></li>
+        </ol>
+      </section>
+      <section class="references">
+        <a id="references" class="anchor"></a>
+        <h2>References:</h2>
+        <ol>
+          <li><a href="https://hackerone.com/reports/1337624">Actual Vulnerability Report</a></li>
+          <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-30334">CVE Details for CVE-2022-30334</a></li>
+          <li><a href="https://textslashplain.com/2019/10/16/privacy-tweaks-limiting-referrer/">Referrer Policy explained by Eric Lawrence</a></li>
+        </ol>
+      </section>
+    </div>
+  </div>

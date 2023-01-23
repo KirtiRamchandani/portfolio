@@ -4,34 +4,36 @@
 
   .modal-body {
     height: auto;
+    min-height: 75vh;
     max-height: 75vh;
   }
 
   @media only screen and (max-width: 900px) {
     .modal-body {
       max-height: 65vh;
+      min-height: 65vh;
     }
   }
 }
 
-.honours-and-rewards {
+.blogs {
   justify-content: center;
   align-items: center;
   position: relative;
 
-  .honours-and-reward-card {
-    background-color: #f3d4d1;
-    padding: 20px;
-    margin: 20px;
+  .blog-card {
+    padding: 10px 20px;
+    margin: 10px 0;
   }
 
   @media only screen and (max-width: 900px) {
-    .honours-and-reward-card {
+    .blog-card {
       margin: 20px 10px;
+      padding: 0;
     }
   }
 
-  a {
+  .blog-title {
     padding: 2px;
     cursor: pointer;
     text-decoration: none !important;
@@ -42,14 +44,18 @@
     transition: background-size 0.35s ease-in-out;
   }
 
-  a:hover {
+  .blog-title:hover {
     background-size: 100% 30px;
   }
 
-  a,
-  span {
+  .blog-title {
     color: #31302c;
     font-size: 16px;
     font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
   }
 }

@@ -4,12 +4,12 @@
 
   .modal-body {
     height: auto;
-    max-height: 550px;
+    max-height: 75vh;
   }
 
   @media only screen and (max-width: 900px) {
     .modal-body {
-      max-height: 450px;
+      max-height: 65vh;
     }
   }
 }
