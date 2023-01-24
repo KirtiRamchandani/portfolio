@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div :class="{ modal: true, 'p-0': displayImgSrc !== null }">
     <div class="modal-header">
       <span class="modal-icon close" @click="kcloseArtGalleryModal()"></span>
       <span class="modal-icon"></span>
@@ -16,13 +16,16 @@
         @mousemove="updateImageZoom($event)"
       />
     </div>
-    <div class="modal-body" id="modalBody">
+    <div
+      :class="{ 'modal-body': true, 'p-0': displayImgSrc !== null }"
+      id="modalBody"
+    >
+      <div v-show="displayImgSrc === null" id="gridContainer"></div>
       <MainImage
         v-if="displayImgSrc !== null"
         :displayImgSrc="displayImgSrc"
         ref="mainImage"
       ></MainImage>
-      <div v-show="displayImgSrc === null" id="gridContainer"></div>
     </div>
   </div>
 </template>

@@ -1,9 +1,7 @@
 <template>
   <div style="position: relative" class="container">
-    <div class="main-img-wrapper">
-      <div id="primary-img">
-        <img :src="displayImgSrc" v-drag />
-      </div>
+    <div id="primary-img">
+      <img :src="displayImgSrc" v-drag />
     </div>
     <!-- <div class="zoom-icons">
       <v-icon @click="zoomOut()" :class="{ disabled: zoom === 1 }"
