@@ -4,6 +4,13 @@
       <span class="modal-icon close" @click="kcloseArtGalleryModal()"></span>
       <span class="modal-icon"></span>
       <span class="modal-icon"></span>
+      <button
+        class="back-arrow"
+        @click="kCloseMainImage()"
+        v-if="displayImgSrc !== null"
+      >
+        <v-icon class="icon">mdi-arrow-left</v-icon>
+      </button>
       <input
         class="zoom-controller"
         type="range"

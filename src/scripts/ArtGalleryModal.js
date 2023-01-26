@@ -31,10 +31,6 @@ export default {
   },
   methods: {
     kcloseArtGalleryModal: function () {
-      if (this.displayImgSrc) {
-        this.$refs.mainImage.closeImage();
-        return;
-      }
       this.$parent.$data.isArtGalleryOpen = false;
     },
     openImage: function (src) {
@@ -70,6 +66,11 @@ export default {
     },
     updateImageZoom: function (e) {
       this.$refs.mainImage.setImageZoom(e.target.value);
+    },
+    kCloseMainImage: function () {
+      if (this.displayImgSrc) {
+        this.$refs.mainImage.closeImage();
+      }
     },
   },
 };

@@ -1,6 +1,6 @@
 .modal {
   background: #faf4e6;
-  width: 750px;
+  width: 700px;
   max-width: 90%;
   left: 0;
   right: 0;
@@ -15,15 +15,16 @@
   .modal-header {
     padding: 5px;
     border-bottom: 2px solid #31302c;
+    display: flex;
 
     .modal-icon {
       width: 20px;
       height: 20px;
       border-radius: 50%;
       border: 2px solid black;
-      display: inline-block;
       margin-left: 5px;
       margin-top: 5px;
+      margin-bottom: 4px;
     }
 
     .close {
@@ -59,4 +60,17 @@
   background: #c8b2d1;
   border-radius: 15px;
   cursor: pointer;
+}
+
+.back-arrow {
+  padding: 0 2px;
+  background-color: #fff;
+  border: 2px solid gray;
+  margin-left: 12px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.back-arrow:hover > .icon {
+  color: #000;
 }

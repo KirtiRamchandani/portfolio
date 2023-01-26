@@ -5,6 +5,9 @@ const HonoursAndRewardsModal = () =>
 const PublicationsModal = () => import("../components/PublicationsModal");
 const ArtGalleryModal = () => import("../components/ArtGalleryModal");
 const BlogsModal = () => import("../components/BlogsModal");
+const FolderClose = () => import("../components/FolderClose");
+const FolderOpen = () => import("../components/FolderOpen");
+const CVEModal = () => import("../components/CVEModal");
 
 export default {
   name: "IndexScreen",
@@ -15,6 +18,9 @@ export default {
     PublicationsModal,
     ArtGalleryModal,
     BlogsModal,
+    FolderClose,
+    FolderOpen,
+    CVEModal,
   },
   data() {
     return {

@@ -4,6 +4,13 @@
       <span class="modal-icon close" @click="closeBlogsModal()"></span>
       <span class="modal-icon"></span>
       <span class="modal-icon"></span>
+      <button
+        class="back-arrow"
+        @click="kCloseDetailedBlog()"
+        v-if="openedBlogId"
+      >
+        <v-icon class="icon">mdi-arrow-left</v-icon>
+      </button>
     </div>
     <div class="modal-body">
       <DetailedBlog v-if="openedBlogId"></DetailedBlog>
