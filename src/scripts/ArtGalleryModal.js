@@ -14,6 +14,7 @@ export default {
       scrollTopPosition: 0,
       imgCount: 0,
       images: imageConfig,
+      openedImageIndex: null,
     };
   },
   mounted() {
@@ -23,8 +24,9 @@ export default {
     kcloseArtGalleryModal: function () {
       this.$parent.$data.isArtGalleryOpen = false;
     },
-    openImage: function (src) {
+    openImage: function (src, index) {
       this.displayImgSrc = src;
+      this.openedImageIndex = index;
     },
     populateImages: function () {
       var self = this;
@@ -43,12 +45,18 @@ export default {
       if (this.displayImgSrc) {
         this.$refs.mainImage.closeImage();
       }
+      setTimeout(() => {
+        const image = document.querySelector(`.image${this.openedImageIndex}`);
+        if (image) image.scrollIntoView();
+        this.openedImageIndex = null;
+      }, 0);
     },
-    addImageToDOM: function (src) {
+    addImageToDOM: function (data) {
       const imageComponentClass = Vue.extend(ImageComponent);
       const img = new imageComponentClass({
         propsData: {
-          imgSrc: src,
+          imgSrc: data[0],
+          index: data[1],
           openImage: this.openImage,
         },
       });
