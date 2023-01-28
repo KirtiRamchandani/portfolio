@@ -9,7 +9,7 @@
         @click="kCloseDetailedBlog()"
         v-if="openedBlogId"
       >
-        <v-icon class="icon">mdi-arrow-left</v-icon>
+        <v-icon class="icon">mdi-chevron-left</v-icon>
       </button>
     </div>
     <div class="modal-body">

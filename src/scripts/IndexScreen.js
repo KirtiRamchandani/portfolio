@@ -66,6 +66,9 @@ export default {
     openKCloseArtGallery: function () {
       this.kcloseOtherModals("ArtGallery");
       this.isArtGalleryOpen = !this.isArtGalleryOpen;
+      if (this.$refs.artGallery.displayImgSrc) {
+        this.$refs.artGallery.$refs.mainImage.closeImage();
+      }
     },
     kcloseOtherModals: function (clickedModal) {
       if (clickedModal !== "Home") this.isHomeOpen = false;
@@ -79,7 +82,12 @@ export default {
         this.$refs.blogsModal.openedBlogId = null;
         this.$refs.blogsModal.updateAddressBarURL(null);
       }
-      if (clickedModal !== "ArtGallery") this.isArtGalleryOpen = false;
+      if (clickedModal !== "ArtGallery") {
+        this.isArtGalleryOpen = false;
+        if (this.$refs.artGallery.displayImgSrc) {
+          this.$refs.artGallery.$refs.mainImage.closeImage();
+        }
+      }
     },
   },
 };
