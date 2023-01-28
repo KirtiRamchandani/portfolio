@@ -1,0 +1,88 @@
+.modal {
+  width: 80% !important;
+  margin-top: 5vh;
+
+  .modal-body {
+    height: auto;
+    max-height: 75vh;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .modal-body {
+      max-height: 65vh;
+    }
+  }
+}
+
+.cves {
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .cve-card {
+    background-color: #cae8d7;
+    padding: 20px;
+    margin: 20px;
+
+    .cve-description {
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .cve-number {
+      text-align: left;
+      color: #31302c;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 0px;
+    }
+
+    .references {
+      font-size: 14px;
+    }
+  }
+
+  @media only screen and (max-width: 900px) {
+    .cve-card {
+      margin: 20px 10px;
+    }
+  }
+
+  a {
+    padding: 2px;
+    cursor: pointer;
+    text-decoration: none !important;
+    background-image: linear-gradient(90deg, #c8b2d1, #c8b2d1);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    transition: background-size 0.35s ease-in-out;
+  }
+
+  a:hover {
+    background-size: 100% 30px;
+  }
+
+  a {
+    color: #31302c;
+    font-size: 14px;
+  }
+}
+
+details > summary {
+  text-align: left;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details > summary::before {
+  content: "[ + ] ";
+}
+
+details[open] > summary::before {
+  content: "[ − ] ";
+}
