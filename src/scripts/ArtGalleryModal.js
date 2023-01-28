@@ -35,6 +35,11 @@ export default {
         worker.onmessage = function (event) {
           self.addImageToDOM(event.data);
         };
+        worker.onerror = () => {
+          console.error(
+            "Failed to load image. There is an error with the web worker!"
+          );
+        };
         worker.postMessage(this.images);
       }
     },
