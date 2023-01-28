@@ -62,7 +62,7 @@
     <ProjectsModal v-if="isProjectsOpen" />
     <HonoursAndRewardsModal v-if="isHonoursAndRewardsOpen" />
     <PublicationsModal v-if="isPublicationsOpen" />
-    <ArtGalleryModal v-if="isArtGalleryOpen" />
+    <ArtGalleryModal v-show="isArtGalleryOpen" />
     <BlogsModal v-show="isBlogsOpen" ref="blogsModal" />
     <CVEModal v-if="isCVEOpen" />
   </div>

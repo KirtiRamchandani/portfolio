@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <img :src="imgSrc" alt="" @click="open(imgSrc)" draggable="false" />
+    <img :src="imgSrc" @click="open(imgSrc)" draggable="false" />
   </div>
 </template>
 
