@@ -1,9 +1,10 @@
 import Vue from "vue";
+import { imageConfig } from "../assets/artGalleryImages/imageConfig";
 import ImageComponent from "../components/ImageComponent";
 import MainImage from "../components/MainImage";
 
 export default {
-  name: "ArtGallerys",
+  name: "ArtGallery",
   components: {
     MainImage,
   },
@@ -12,143 +13,7 @@ export default {
       displayImgSrc: null,
       scrollTopPosition: 0,
       imgCount: 0,
-      images: [
-        {
-          src: "https://source.unsplash.com/1300x1200/",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?algeria",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?india",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?america",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?finland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?pakistan",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?bangladesh",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?afghanistan",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?srilanka",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?poland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?britain",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?canada",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?newzealand",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?rome",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?ireland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?algeria",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?india",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?america",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?finland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?pakistan",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?bangladesh",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?afghanistan",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?srilanka",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?poland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?britain",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?canada",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?newzealand",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?rome",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?ireland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?algeria",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?india",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?america",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?finland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?pakistan",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?bangladesh",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?afghanistan",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?srilanka",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?poland",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?britain",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?canada",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?newzealand",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?rome",
-        },
-        {
-          src: "https://source.unsplash.com/1300x1200/?ireland",
-        },
-      ],
+      images: imageConfig,
     };
   },
   mounted() {
@@ -197,6 +62,14 @@ export default {
       const top = window.pageYOffset + window.innerHeight - offset;
       if (top > element.scrollHeight) {
         this.populateImages();
+      }
+    },
+    updateImageZoom: function (e) {
+      this.$refs.mainImage.setImageZoom(e.target.value);
+    },
+    kCloseMainImage: function () {
+      if (this.displayImgSrc) {
+        this.$refs.mainImage.closeImage();
       }
     },
   },

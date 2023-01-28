@@ -1,18 +1,14 @@
 <template>
   <div style="position: relative" class="container">
-    <div class="close-button">
-      <v-icon @click="closeImage">mdi-arrow-left</v-icon>
+    <div id="primary-img">
+      <img :src="displayImgSrc" v-drag />
     </div>
-
-    <div class="main-img-wrapper">
-      <img :src="displayImgSrc" id="primary-img" draggable="false" />
-    </div>
-    <div class="zoom-icons">
+    <!-- <div class="zoom-icons">
       <v-icon @click="zoomOut()" :class="{ disabled: zoom === 1 }"
         >mdi-magnify-minus</v-icon
       >
-      <v-icon @click="zoomIn()" class="">mdi-magnify-plus</v-icon>
-    </div>
+      <v-icon @click="zoomIn()">mdi-magnify-plus</v-icon>
+    </div> -->
   </div>
 </template>
 

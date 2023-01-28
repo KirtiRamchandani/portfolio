@@ -2,6 +2,16 @@
   width: 80%;
   margin-top: 5vh;
 
+  .zoom-controller {
+    margin-left: 1.5vh;
+    accent-color: #999;
+    cursor: pointer;
+  }
+
+  .zoom-controller::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
   .modal-body {
     padding: 20px 30px 23px 30px;
     height: auto;
@@ -44,38 +54,22 @@
   }
 }
 
-.main-img-wrapper {
-  overflow: hidden;
+#primary-img {
+  .modal-body {
+    padding: 0 !important;
+  }
 
   img {
     width: 100%;
-    height: auto;
-    max-height: 500px;
+    height: 100%;
     object-fit: contain;
+    max-height: 75vh;
   }
 
   @media only screen and (max-width: 900px) {
     img {
-      max-height: 400px;
+      max-height: 65vh;
     }
-  }
-}
-
-.close-button {
-  position: absolute;
-  z-index: 1;
-
-  button {
-    font-size: 24px;
-    color: black;
-    background-color: white;
-    border: 2px solid black;
-    padding: 6px;
-    border-radius: 50%;
-  }
-
-  button:hover {
-    background-color: #c5c5c5;
   }
 }
 
@@ -86,9 +80,9 @@
   z-index: 1;
 
   button {
-    font-size: 24px;
-    border: 2px solid black;
-    margin-left: 10px;
+    font-size: 20px;
+    border: 1px solid black;
+    margin-left: 5px;
     padding: 6px;
     background: white;
     text-align: center;
@@ -108,12 +102,21 @@
 }
 
 .container {
+  overflow: hidden;
+  width: 100%;
   height: auto;
-  min-height: 500px;
+  min-height: 75vh;
+  max-height: 75vh;
+  border-radius: 0 0 14px 14px;
 }
 
 @media only screen and (max-width: 900px) {
   .container {
-    min-height: 400px;
+    min-height: 65vh;
+    max-height: 65vh;
   }
+}
+
+.p-0 {
+  padding: 0 !important;
 }

@@ -21,11 +21,13 @@ export default {
   },
   methods: {
     closeBlogsModal: function () {
+      this.$parent.$data.isBlogsOpen = false;
+    },
+    kCloseDetailedBlog: function () {
       if (this.openedBlogId) {
         this.openKCloseBlog(null);
         return;
       }
-      this.$parent.$data.isBlogsOpen = false;
     },
     openKCloseBlog: function (selectedBlogId) {
       if (selectedBlogId) {

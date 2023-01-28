@@ -22,14 +22,14 @@
   position: relative;
 
   .blog-card {
-    padding: 10px 20px;
-    margin: 10px 0;
+    background-color: #f3d4d1;
+    padding: 20px;
+    margin: 20px;
   }
 
   @media only screen and (max-width: 900px) {
     .blog-card {
       margin: 20px 10px;
-      padding: 0;
     }
   }
 

@@ -16,7 +16,7 @@
 
 .projects {
   .project-card {
-    background-color: #f3d4d1;
+    background-color: #c9c2ea;
     padding: 20px;
     margin: 20px;
 
@@ -51,6 +51,7 @@
 }
 
 details > summary {
+  text-align: left;
   list-style-type: none;
   cursor: pointer;
 }

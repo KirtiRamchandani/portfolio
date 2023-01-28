@@ -11,21 +11,15 @@
   .nav-option {
     text-align: center;
     padding: 0 5px;
-    margin: 5px;
+    margin: 5px 0;
     cursor: pointer;
 
-    .nav-icons,
-    .nav-icons-open {
-      font-size: 50px;
-      color: #faf4e6;
-      -webkit-filter: drop-shadow(4px 4px 0 #31302c);
-      filter: drop-shadow(4px 4px 0 #31302c);
-    }
-
     .nav-title {
+      // color: #fff;
       margin: 0;
       font-weight: 500;
       font-size: 12px;
+      margin-top: -5px;
     }
   }
 }

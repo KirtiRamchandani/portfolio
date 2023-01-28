@@ -2,50 +2,59 @@
   <div>
     <div class="home-screen">
       <div class="nav-option" @click="openKCloseHome()">
-        <v-icon class="nav-icons-open" v-if="isHomeOpen"
-          >mdi-folder-open</v-icon
-        >
-        <v-icon class="nav-icons" v-else>mdi-folder</v-icon>
+        <folder-open
+          v-if="isHomeOpen"
+          :style="`--element-color: #c7c7bb`"
+        ></folder-open>
+        <folder-close v-else :style="`--element-color: #c7c7bb`"></folder-close>
         <p class="nav-title">Home</p>
       </div>
       <div class="nav-option" @click="openKCloseProjects()">
-        <v-icon class="nav-icons-open" v-if="isProjectsOpen"
-          >mdi-folder-open</v-icon
-        >
-        <v-icon class="nav-icons" v-else>mdi-folder</v-icon>
+        <folder-open
+          v-if="isProjectsOpen"
+          :style="`--element-color: #c9c2ea`"
+        ></folder-open>
+        <folder-close v-else :style="`--element-color: #c9c2ea`"></folder-close>
         <p class="nav-title">Projects</p>
       </div>
       <div class="nav-option" @click="openKCloseHonoursAndRewards()">
-        <v-icon class="nav-icons-open" v-if="isHonoursAndRewardsOpen"
-          >mdi-folder-open</v-icon
-        >
-        <v-icon class="nav-icons" v-else>mdi-folder</v-icon>
+        <folder-open
+          v-if="isHonoursAndRewardsOpen"
+          :style="`--element-color: #f0caa3`"
+        ></folder-open>
+        <folder-close v-else :style="`--element-color: #f0caa3`"></folder-close>
         <p class="nav-title">Honours</p>
       </div>
       <div class="nav-option" @click="openKClosePublications()">
-        <v-icon class="nav-icons-open" v-if="isPublicationsOpen"
-          >mdi-folder-open</v-icon
-        >
-        <v-icon class="nav-icons" v-else>mdi-folder</v-icon>
+        <folder-open
+          v-if="isPublicationsOpen"
+          :style="`--element-color: #f1bdcf`"
+        ></folder-open>
+        <folder-close v-else :style="`--element-color: #f1bdcf`"></folder-close>
         <p class="nav-title">Publications</p>
       </div>
       <div class="nav-option" @click="openKCloseCVEs()">
-        <v-icon class="nav-icons-open" v-if="isCVEOpen">mdi-folder-open</v-icon>
-        <v-icon class="nav-icons" v-else>mdi-folder</v-icon>
+        <folder-open
+          v-if="isCVEOpen"
+          :style="`--element-color: #cae8d7`"
+        ></folder-open>
+        <folder-close v-else :style="`--element-color: #cae8d7`"></folder-close>
         <p class="nav-title">CVEs</p>
       </div>
       <div class="nav-option" @click="openKCloseBlogs()">
-        <v-icon class="nav-icons-open" v-if="isBlogsOpen"
-          >mdi-folder-open</v-icon
-        >
-        <v-icon class="nav-icons" v-else>mdi-folder</v-icon>
+        <folder-open
+          v-if="isBlogsOpen"
+          :style="`--element-color: #f3d4d1`"
+        ></folder-open>
+        <folder-close v-else :style="`--element-color: #f3d4d1`"></folder-close>
         <p class="nav-title">Blogs</p>
       </div>
       <div class="nav-option" @click="openKCloseArtGallery()">
-        <v-icon class="nav-icons-open" v-if="isArtGalleryOpen"
-          >mdi-folder-open</v-icon
-        >
-        <v-icon class="nav-icons" v-else>mdi-folder</v-icon>
+        <folder-open
+          v-if="isArtGalleryOpen"
+          :style="`--element-color: #b5f0cb`"
+        ></folder-open>
+        <folder-close v-else :style="`--element-color: #b5f0cb`"></folder-close>
         <p class="nav-title">Art Gallery</p>
       </div>
     </div>
@@ -55,6 +64,7 @@
     <PublicationsModal v-if="isPublicationsOpen" />
     <ArtGalleryModal v-if="isArtGalleryOpen" />
     <BlogsModal v-show="isBlogsOpen" ref="blogsModal" />
+    <CVEModal v-if="isCVEOpen" />
   </div>
 </template>
 
