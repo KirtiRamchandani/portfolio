@@ -1,0 +1,55 @@
+.modal {
+  width: 80%;
+  margin-top: 5vh;
+
+  .modal-body {
+    height: auto;
+    max-height: 75vh;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .modal-body {
+      max-height: 65vh;
+    }
+  }
+}
+
+.honours-and-rewards {
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .honours-and-reward-card {
+    background-color: #f0caa3;
+    padding: 20px;
+    margin: 20px;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .honours-and-reward-card {
+      margin: 20px 10px;
+    }
+  }
+
+  a {
+    padding: 2px;
+    cursor: pointer;
+    text-decoration: none !important;
+    background-image: linear-gradient(90deg, #c69749, #c69749);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    transition: background-size 0.35s ease-in-out;
+  }
+
+  a:hover {
+    background-size: 100% 30px;
+  }
+
+  a,
+  span {
+    color: #31302c;
+    font-size: 16px;
+    font-weight: 700;
+  }
+}

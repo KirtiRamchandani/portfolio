@@ -1,7 +1,7 @@
 const HomeModal = () => import("../components/HomeModal");
 const ProjectsModal = () => import("../components/ProjectsModal");
-const HonoursAndRewardsModal = () =>
-  import("../components/HonoursAndRewardsModal");
+const HonoursAndPublicationsModal = () =>
+  import("../components/HonoursAndPublicationsModal");
 const PublicationsModal = () => import("../components/PublicationsModal");
 const ArtGalleryModal = () => import("../components/ArtGalleryModal");
 const BlogsModal = () => import("../components/BlogsModal");
@@ -14,7 +14,7 @@ export default {
   components: {
     HomeModal,
     ProjectsModal,
-    HonoursAndRewardsModal,
+    HonoursAndPublicationsModal,
     PublicationsModal,
     ArtGalleryModal,
     BlogsModal,

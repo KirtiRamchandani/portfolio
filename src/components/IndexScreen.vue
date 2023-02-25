@@ -23,15 +23,7 @@
           :style="`--element-color: #f0caa3`"
         ></folder-open>
         <folder-close v-else :style="`--element-color: #f0caa3`"></folder-close>
-        <p class="nav-title">Honours</p>
-      </div>
-      <div class="nav-option" @click="openKClosePublications()">
-        <folder-open
-          v-if="isPublicationsOpen"
-          :style="`--element-color: #f1bdcf`"
-        ></folder-open>
-        <folder-close v-else :style="`--element-color: #f1bdcf`"></folder-close>
-        <p class="nav-title">Publications</p>
+        <p class="nav-title">Honours & Publications</p>
       </div>
       <div class="nav-option" @click="openKCloseCVEs()">
         <folder-open
@@ -60,7 +52,7 @@
     </div>
     <HomeModal v-if="isHomeOpen" />
     <ProjectsModal v-if="isProjectsOpen" />
-    <HonoursAndRewardsModal v-if="isHonoursAndRewardsOpen" />
+    <HonoursAndPublicationsModal v-if="isHonoursAndRewardsOpen" />
     <PublicationsModal v-if="isPublicationsOpen" />
     <ArtGalleryModal v-show="isArtGalleryOpen" ref="artGallery" />
     <BlogsModal v-show="isBlogsOpen" ref="blogsModal" />
