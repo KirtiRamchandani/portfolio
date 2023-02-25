@@ -9,7 +9,7 @@
         @click="kCloseMainImage()"
         v-if="displayImgSrc !== null"
       >
-        <v-icon class="icon">mdi-arrow-left</v-icon>
+        <v-icon class="icon">mdi-chevron-left</v-icon>
       </button>
       <input
         class="zoom-controller"

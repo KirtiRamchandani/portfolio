@@ -14,54 +14,33 @@ export default {
       scrollTopPosition: 0,
       imgCount: 0,
       images: imageConfig,
+      openedImageIndex: null,
     };
   },
   mounted() {
     this.populateImages();
-    const element = document.getElementById("gridContainer");
-    element.addEventListener("wheel", this.scrollHandler, { passive: true });
-    element.addEventListener("touchmove", this.scrollHandler, {
-      passive: true,
-    });
-  },
-  unmounted() {
-    const element = document.getElementById("gridContainer");
-    element.removeEventListener("wheel");
-    element.removeEventListener("touchmove");
   },
   methods: {
     kcloseArtGalleryModal: function () {
       this.$parent.$data.isArtGalleryOpen = false;
     },
-    openImage: function (src) {
+    openImage: function (src, index) {
       this.displayImgSrc = src;
+      this.openedImageIndex = index;
     },
     populateImages: function () {
-      const imagesToPopulate = this.images.slice(
-        this.imgCount,
-        this.imgCount + 9
-      );
-      this.imgCount += 9;
-      imagesToPopulate.forEach((element) => {
-        const imageComponentClass = Vue.extend(ImageComponent);
-        const img = new imageComponentClass({
-          propsData: {
-            imgSrc: element.src,
-            openImage: this.openImage,
-          },
-        });
-        img.$mount();
-        document.getElementById("gridContainer").appendChild(img.$el);
-      });
-    },
-    scrollHandler: function () {
-      const element = document.getElementById("gridContainer");
-      const offset =
-        element.getBoundingClientRect().top -
-        element.offsetParent.getBoundingClientRect().top;
-      const top = window.pageYOffset + window.innerHeight - offset;
-      if (top > element.scrollHeight) {
-        this.populateImages();
+      var self = this;
+      if (window.Worker) {
+        const worker = new Worker("/worker.js");
+        worker.onmessage = function (event) {
+          self.addImageToDOM(event.data);
+        };
+        worker.onerror = () => {
+          console.error(
+            "Failed to load image. There is an error with the web worker!"
+          );
+        };
+        worker.postMessage(this.images);
       }
     },
     updateImageZoom: function (e) {
@@ -71,6 +50,23 @@ export default {
       if (this.displayImgSrc) {
         this.$refs.mainImage.closeImage();
       }
+      setTimeout(() => {
+        const image = document.querySelector(`.image${this.openedImageIndex}`);
+        if (image) image.scrollIntoView();
+        this.openedImageIndex = null;
+      }, 0);
+    },
+    addImageToDOM: function (data) {
+      const imageComponentClass = Vue.extend(ImageComponent);
+      const img = new imageComponentClass({
+        propsData: {
+          imgSrc: data[0],
+          index: data[1],
+          openImage: this.openImage,
+        },
+      });
+      img.$mount();
+      document.getElementById("gridContainer").appendChild(img.$el);
     },
   },
 };

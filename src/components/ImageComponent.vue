@@ -1,6 +1,12 @@
 <template>
   <div class="wrapper">
-    <img :src="imgSrc" alt="" @click="open(imgSrc)" draggable="false" />
+    <img
+      :class="`image${index}`"
+      :src="imgSrc"
+      alt="Enlarged image"
+      @click="open(imgSrc, index)"
+      draggable="false"
+    />
   </div>
 </template>
 
@@ -8,14 +14,15 @@
 export default {
   props: {
     imgSrc: String,
+    index: Number,
     openImage: {
       type: Function,
       default: () => {},
     },
   },
   methods: {
-    open: function (s) {
-      this.openImage(s);
+    open: function (s, i) {
+      this.openImage(s, i);
     },
   },
 };
