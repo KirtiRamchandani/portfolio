@@ -31,9 +31,14 @@
             >mdi-linkedin</v-icon
           ></a
         >
-        <a href="https://kirtikumarar.com/Kirtikumar_A_R" target="_blank"
+        <a href="https://twitter.com/kirtikumar_a_r" target="_blank"
           ><v-icon class="social-icon" style="display: block"
             >mdi-twitter</v-icon
+          ></a
+        >
+        <a href="https://github.com/KirtiRamchandani" target="_blank"
+          ><v-icon class="social-icon" style="display: block"
+            >mdi-github</v-icon
           ></a
         >
         <a
