@@ -19,7 +19,6 @@ export default {
   },
   mounted() {
     this.populateImages();
-    console.log("loaded");
   },
   methods: {
     kcloseArtGalleryModal: function () {
