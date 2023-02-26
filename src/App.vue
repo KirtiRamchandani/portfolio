@@ -17,9 +17,6 @@ export default {
   components: {
     IndexScreen,
   },
-  data() {
-    return { isLoading: true };
-  },
   methods: {
     redirectToBlogsModalIfUrlContainsBlogTitle: function () {
       const urlParams = new URLSearchParams(window.location.search);
