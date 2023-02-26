@@ -1,6 +1,5 @@
 <template>
   <v-app class="app">
-    <SplashScreen :isLoading="isLoading" />
     <v-main>
       <IndexScreen ref="IndexScreen" />
     </v-main>
@@ -9,14 +8,14 @@
 
 <script>
 import IndexScreen from "./components/IndexScreen";
-import SplashScreen from "./components/SplashScreen";
+import ArtGalleryModal from "./components/ArtGalleryModal";
 import { blogAndIdMapping } from "./assets/blogs/blogAndIdMapping";
+import Vue from "vue";
 
 export default {
   name: "App",
   components: {
     IndexScreen,
-    SplashScreen,
   },
   data() {
     return { isLoading: true };
@@ -28,21 +27,19 @@ export default {
         const blogTitle = urlParams.get("blog");
         const blogId = blogAndIdMapping[blogTitle];
         if (blogId) {
+          this.$refs.IndexScreen.isHomeOpen = false;
           setTimeout(() => {
-            this.$refs.IndexScreen.isHomeOpen = false;
             this.$refs.IndexScreen.isBlogsOpen = true;
             this.$refs.IndexScreen.$refs.blogsModal.openedBlogId = blogId;
-          }, 4000);
+          }, 100);
         }
       }
     },
   },
   mounted() {
-    this.$refs.IndexScreen.isArtGalleryOpen = true;
-    setTimeout(() => {
-      this.$refs.IndexScreen.isArtGalleryOpen = false;
-      this.isLoading = false;
-    }, 4000);
+    // invokes art gallery modal
+    const artGalleryModal = Vue.extend(ArtGalleryModal);
+    new artGalleryModal();
 
     // redirect to blogs modal and open the specified blog in the URL.
     // this.redirectToBlogsModalIfUrlContainsBlogTitle();
