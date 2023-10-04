@@ -46,15 +46,14 @@ export default {
 
 <style lang="scss">
 .app {
-  background-color: #3aafa9 !important;
+  background-color: #dfccfb !important;
   color: #31302c !important;
   font-family: Jost, sans-serif;
   font-size: 15px;
   margin: 0;
   height: 100%;
   background-size: 40px 40px !important;
-  background-image: linear-gradient(90deg, #2b7a78 1px, transparent 0),
-    linear-gradient(180deg, #2b7a78 1px, transparent 0) !important;
+  background-image: linear-gradient(90deg,#a2bfae 1px,transparent 0),linear-gradient(180deg,#a2bfae 1px,transparent 0) !important;
   overflow: hidden;
   background-repeat: repeat;
 }

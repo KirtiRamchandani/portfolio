@@ -46,14 +46,14 @@
           ></folder-close>
           <p class="nav-title">CVEs</p>
         </div>
-        <!-- <div class="nav-option" @click="openKCloseBlogs()">
+        <div class="nav-option" @click="openKCloseBlogs()">
         <folder-open
           v-if="isBlogsOpen"
           :style="`--element-color: #f3d4d1`"
         ></folder-open>
         <folder-close v-else :style="`--element-color: #f3d4d1`"></folder-close>
         <p class="nav-title">Blogs</p>
-      </div> -->
+      </div>
         <div class="nav-option" @click="openKCloseArtGallery()">
           <folder-open
             v-if="isArtGalleryOpen"
