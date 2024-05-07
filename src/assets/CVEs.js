@@ -261,6 +261,16 @@ const CVEs = [
     ],
   },
   {
+    CVENumber: "CVE-2023-25749",
+    Description:
+      "Firefox for Android may have opened third-party apps without a prompt.",
+    References: [
+      "https://www.mozilla.org/en-US/security/advisories/mfsa2023-09/#CVE-2023-25749",
+      "https://bugzilla.mozilla.org/show_bug.cgi?id=1810705",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-25749",
+    ],
+  },
+   {
     CVENumber: "CVE-2022-30334",
     Description:
       "Brave before 1.34, when a Private Window with Tor Connectivity is used, leaks .onion URLs in Referer and Origin headers.",
