@@ -201,6 +201,16 @@ const CVEs = [
     ],
   },
   {
+    CVENumber: "CVE-2022-22736",
+    Description:
+      "Potential local privilege escalation when loading modules from the install directory.",
+    References: [
+      "https://www.mozilla.org/en-US/security/advisories/mfsa2022-01/#CVE-2022-22736",
+      "https://bugzilla.mozilla.org/show_bug.cgi?id=1742692",
+      "https://bugzilla.mozilla.org/show_bug.cgi?id=1741611",
+    ],
+  },
+  {
     CVENumber: "CVE-2022-28868",
     Description:
       "Address bar may show next URL for a short period of time, which could potentially lead to address bar spoofing.",
