@@ -270,6 +270,18 @@ const CVEs = [
       "https://nvd.nist.gov/vuln/detail/CVE-2023-25749",
     ],
   },
+  {
+    CVENumber: "CVE-2023-1818",
+    Description:
+      "Use after free in Vulkan in Google Chrome prior to 112.0.5615.49 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    References: [
+      "https://chromereleases.googleblog.com/2023/04/stable-channel-update-for-desktop.html",
+      "https://crbug.com/1223346",
+      "https://www.debian.org/security/2023/dsa-5386",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-1818",
+      "https://issues.chromium.org/issues/40056320",
+    ],
+  },
    {
     CVENumber: "CVE-2022-30334",
     Description:
