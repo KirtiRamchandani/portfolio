@@ -30,18 +30,6 @@ const CVEs = [
     Description:
       "Vulnerability in the Oracle HTTP Server product of Oracle Fusion Middleware (component: OSSL Module). Supported versions that are affected are 11.1.1.9.0, 12.1.3.0.0 and 12.2.1.3.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle HTTP Server.",
     References: [
-      "https://bugs.launchpad.net/mahara/+bug/1819547",
-      "https://mahara.org/interaction/forum/topic.php?id=8446",
-      "https://reviews.mahara.org/c/mahara/+/9619/",
-      "https://nvd.nist.gov/vuln/detail/CVE-2020-2545",
-      "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-2545",
-    ],
-  },
-  {
-    CVENumber: "CVE-2020-2545",
-    Description:
-      "Vulnerability in the Oracle HTTP Server product of Oracle Fusion Middleware (component: OSSL Module). Supported versions that are affected are 11.1.1.9.0, 12.1.3.0.0 and 12.2.1.3.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle HTTP Server.",
-    References: [
       "https://www.oracle.com/security-alerts/cpujan2020.html",
       "https://nvd.nist.gov/vuln/detail/CVE-2020-2545",
       "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-2545",
