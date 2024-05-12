@@ -103,19 +103,6 @@ const CVEs = [
     ],
   },
   {
-    CVENumber: "CVE-2021-21187",
-    Description:
-      "Insufficient data validation in URL formatting in Google Chrome prior to 89.0.4389.72 allowed a remote attacker to perform domain spoofing via IDN homographs via a crafted domain name.",
-    References: [
-      "https://crbug.com/1155516",
-      "https://chromereleases.googleblog.com/2021/03/stable-channel-update-for-desktop.html",
-      "https://nvd.nist.gov/vuln/detail/CVE-2021-21187",
-      "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-21187",
-      "https://security.gentoo.org/glsa/202104-08",
-      "https://www.debian.org/security/2021/dsa-4886",
-    ],
-  },
-  {
     CVENumber: "CVE-2021-25254",
     Description:
       "Yandex Browser Lite for Android before 21.1.0 allows remote attackers to spoof the address bar.",
