@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import blog1 from "../assets/blogs/blog1.txt";
+// import blog1 from "../assets/blogs/blog1.txt";
+import blogPlaceholder from "../assets/blogs/blogPlaceholder.txt";
 
 export default {
   data() {
@@ -11,8 +12,8 @@ export default {
   },
   props: ["blogId"],
   methods: {
-    getBlogContent: function () {
-      return blog1;
+    getBlogContent: function (id = null) {
+      if (id === null) return blogPlaceholder
     },
   },
 };

@@ -1,0 +1,7 @@
+<div class="blog">
+    <section>
+      <p>
+        Blog content goes here!
+      </p>
+    </section>
+</div>

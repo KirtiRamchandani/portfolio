@@ -39,7 +39,7 @@ export default {
     new artGalleryModal();
 
     // redirect to blogs modal and open the specified blog in the URL.
-    // this.redirectToBlogsModalIfUrlContainsBlogTitle();
+    this.redirectToBlogsModalIfUrlContainsBlogTitle();
   },
 };
 </script>
