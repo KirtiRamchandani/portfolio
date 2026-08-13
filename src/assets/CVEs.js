@@ -292,6 +292,55 @@ const CVEs = [
       "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-38163",
     ],
   },
+  {
+    CVENumber: "CVE-2021-30589",
+    Description:
+      "Insufficient validation of untrusted input in Sharing in Google Chrome prior to 92.0.4515.107 allowed a remote attacker to perform domain spoofing via a crafted HTML page.",
+    References: [
+      "https://chromereleases.googleblog.com/2021/07/stable-channel-update-for-desktop_20.html",
+      "https://crbug.com/1180510",
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-30589",
+    ],
+  },
+  {
+    CVENumber: "CVE-2022-46692",
+    Description:
+      "A logic issue was addressed with improved state management. Processing maliciously crafted web content may bypass Same Origin Policy. WebKit Bugzilla: 246783.",
+    References: [
+      "https://support.apple.com/en-us/102799",
+      "https://support.apple.com/en-us/102808",
+      "https://nvd.nist.gov/vuln/detail/CVE-2022-46692",
+    ],
+  },
+  {
+    CVENumber: "CVE-2022-46695",
+    Description:
+      "A spoofing issue existed in the handling of URLs. Visiting a website that frames malicious content may lead to UI spoofing. Credited by Apple in Safari / macOS Ventura 13.1 security notes.",
+    References: [
+      "https://support.apple.com/en-us/102808",
+      "https://nvd.nist.gov/vuln/detail/CVE-2022-46695",
+    ],
+  },
+  {
+    CVENumber: "CVE-2024-5693",
+    Description:
+      "Offscreen Canvas did not properly track cross-origin tainting, which could be used to access image data from another site in violation of same-origin policy. This affects Firefox < 127, Firefox ESR < 115.12, and Thunderbird < 115.12.",
+    References: [
+      "https://www.mozilla.org/en-US/security/advisories/mfsa2024-25/#CVE-2024-5693",
+      "https://www.mozilla.org/en-US/security/advisories/mfsa2024-26/#CVE-2024-5693",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-5693",
+    ],
+  },
+  {
+    CVENumber: "CVE-2025-8041",
+    Description:
+      "In the address bar, Firefox for Android truncated the display of URLs from the end instead of prioritizing the origin. This vulnerability was fixed in Firefox 141.",
+    References: [
+      "https://www.mozilla.org/en-US/security/advisories/mfsa2025-56/#CVE-2025-8041",
+      "https://bugzilla.mozilla.org/show_bug.cgi?id=1670725",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-8041",
+    ],
+  },
 ];
 
 export { CVEs };
